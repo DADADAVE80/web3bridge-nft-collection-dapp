@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { getProposalsContract } from "../constants/contracts";
 import { readOnlyProvider } from "../constants/providers";
 import { decodeBytes32String } from "ethers";
+import { useLatestBlock } from "./useLatestBlock";
+
+readOnlyProvider.getBlock;
 
 const useProposals = () => {
     const [proposals, setProposal] = useState({
@@ -9,9 +12,10 @@ const useProposals = () => {
         data: [],
     });
 
+    const newBlock = useLatestBlock();
+
     useEffect(() => {
         const contract = getProposalsContract(readOnlyProvider);
-
         contract
             .getAllProposals()
             .then((res) => {
@@ -28,7 +32,7 @@ const useProposals = () => {
                 console.error("error fetching proposals: ", err);
                 setProposal((prev) => ({ ...prev, loading: false }));
             });
-    }, []);
+    }, [newBlock]);
 
     return proposals;
 };

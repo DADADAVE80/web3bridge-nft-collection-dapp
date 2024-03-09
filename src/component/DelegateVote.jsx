@@ -1,6 +1,10 @@
 import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
 
-const DelegateVote = ({ to, handleDelegate }) => {
+const DelegateVote = ({
+    delegateAddress,
+    setDelegateAddress,
+    handleDelegate,
+}) => {
     return (
         <Card size="2" style={{ width: 425 }}>
             <Flex gap="" align="center">
@@ -10,11 +14,15 @@ const DelegateVote = ({ to, handleDelegate }) => {
                             <Text as="div" size="2" mb="1" weight="bold">
                                 Delegate&apos;s Address
                             </Text>
-                            <TextField.Input placeholder="Enter Delegate's Address" />
+                            <TextField.Input
+                                value={delegateAddress}
+                                onChange={(e) =>
+                                    setDelegateAddress(e.target.value)
+                                }
+                                placeholder="Enter Delegate's Address"
+                            />
                         </label>
-                        <Button onClick={() => handleDelegate(to)}>
-                            Delegate vote
-                        </Button>
+                        <Button onClick={handleDelegate}>Delegate vote</Button>
                     </Flex>
                 </Box>
             </Flex>
