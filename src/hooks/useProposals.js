@@ -4,8 +4,6 @@ import { readOnlyProvider } from "../constants/providers";
 import { decodeBytes32String } from "ethers";
 import { useLatestBlock } from "./useLatestBlock";
 
-readOnlyProvider.getBlock;
-
 const useProposals = () => {
     const [proposals, setProposal] = useState({
         loading: true,
