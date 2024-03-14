@@ -1,55 +1,78 @@
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Button, Container, Flex, Text } from "@radix-ui/themes";
 import { configureWeb3Modal } from "./connection";
 import "@radix-ui/themes/styles.css";
 import Header from "./component/Header";
-import Proposal from "./component/Proposal";
-import DelegateVote from "./component/DelegateVote";
-import useProposals from "./hooks/useProposals";
-import useHandleVote from "./hooks/useHandleVote";
-import useDelegateVote from "./hooks/useDelegateVote";
-import { useState } from "react";
-import useNumberOfVoters from "./hooks/useNumberOfVoters";
+import AppTabs from "./component/AppTabs";
+import useCollections from "./hooks/useCollections";
+import useMyNfts from "./hooks/useMyNfts";
 
 configureWeb3Modal();
 
 function App() {
-    const { loading, data: proposals } = useProposals();
-    const [delegateAddress, setDelegateAddress] = useState("");
+    const tokensData = useCollections();
+    const myTokenIds = useMyNfts();
 
-    const handleVote = useHandleVote();
-    const handleDelegateVote = useDelegateVote(delegateAddress);
-    const numberOfEligibleVoters = useNumberOfVoters();
-
+    const myTokensData = tokensData.filter((x, index) =>
+        myTokenIds.includes(index)
+    );
     return (
         <Container>
             <Header />
             <main className="mt-6">
-                <Flex mb="4" justify="between">
-                    <DelegateVote
-                        delegateAddress={delegateAddress}
-                        setDelegateAddress={setDelegateAddress}
-                        handleDelegate={handleDelegateVote}
-                    />
-                    <span>Eligible Voters: {numberOfEligibleVoters}</span>
-                </Flex>
-
-                <Flex wrap={"wrap"} gap={"6"}>
-                    {loading ? (
-                        <Text>Loading...</Text>
-                    ) : proposals.length !== 0 ? (
-                        proposals.map((item, index) => (
-                            <Proposal
-                                key={index}
-                                name={item.name}
-                                handleVote={handleVote}
-                                id={index}
-                                voteCount={Number(item.voteCount)}
-                            />
-                        ))
-                    ) : (
-                        <Text>Could not get proposals!!</Text>
-                    )}
-                </Flex>
+                <AppTabs
+                    MyNfts={
+                        <Flex align="center" gap="8" wrap={"wrap"}>
+                            {myTokensData.length === 0 ? (
+                                <Text>No NFT owned yet</Text>
+                            ) : (
+                                myTokensData.map((x) => (
+                                    <Box key={x.dna} className="w-[20rem]">
+                                        <img
+                                            src={x.image}
+                                            className="w-full object-contain"
+                                            alt={x.name}
+                                        />
+                                        <Text className="block text-2xl">
+                                            Name: {x.name}
+                                        </Text>
+                                        <Text className="block">
+                                            Description: {x.description}
+                                        </Text>
+                                        <Button className="px-8 py-2 text-xl mt-2">
+                                            Mint
+                                        </Button>
+                                    </Box>
+                                ))
+                            )}
+                        </Flex>
+                    }
+                    AllCollections={
+                        <Flex align="center" gap="8" wrap={"wrap"}>
+                            {tokensData.length === 0 ? (
+                                <Text>Loading...</Text>
+                            ) : (
+                                tokensData.map((x) => (
+                                    <Box key={x.dna} className="w-[20rem]">
+                                        <img
+                                            src={x.image}
+                                            className="w-full object-contain"
+                                            alt={x.name}
+                                        />
+                                        <Text className="block text-2xl">
+                                            Name: {x.name}
+                                        </Text>
+                                        <Text className="block">
+                                            Description: {x.description}
+                                        </Text>
+                                        <Button className="px-8 py-2 text-xl mt-2">
+                                            Mint
+                                        </Button>
+                                    </Box>
+                                ))
+                            )}
+                        </Flex>
+                    }
+                />
             </main>
         </Container>
     );
