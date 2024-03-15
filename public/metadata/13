@@ -1,0 +1,33 @@
+{
+  "name": "Mata NFT #13",
+  "description": "A dummy NFT collection of 30 unique pixelated arts based on HashLips Art Engine sample assets. This is for testing purposes only and not real NFT collection.",
+  "image": "ipfs://QmV5NecdP5UcP3PVw5PGTRXKCxNRm8cMqm4UStoVyuZsBs/13.png",
+  "dna": "9beb2266c762844b1d89c0745fba78741539df53",
+  "edition": 13,
+  "date": 1665696159310,
+  "external_url": "https://github.com/warengonzaga/nft-dummy-assets",
+  "creator": "Waren Gonzaga",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Eyeball",
+      "value": "White"
+    },
+    {
+      "trait_type": "Eye Color",
+      "value": "Purple"
+    },
+    {
+      "trait_type": "Iris",
+      "value": "Normal"
+    },
+    {
+      "trait_type": "Shine",
+      "value": "Normal"
+    }
+  ],
+  "compiler": "The thirdweb Art Engine"
+}

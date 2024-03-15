@@ -9,12 +9,13 @@ import useMyNfts from "./hooks/useMyNfts";
 configureWeb3Modal();
 
 function App() {
-    const tokensData = useCollections();
-    const myTokenIds = useMyNfts();
+    const NFTCollection = useCollections();
+    const myNFTs = useMyNfts();
 
-    const myTokensData = tokensData.filter((x, index) =>
-        myTokenIds.includes(index)
+    const myNFTData = NFTCollection.filter((x, index) =>
+        myNFTs.includes(index)
     );
+
     return (
         <Container>
             <Header />
@@ -22,13 +23,13 @@ function App() {
                 <AppTabs
                     MyNfts={
                         <Flex align="center" gap="8" wrap={"wrap"}>
-                            {myTokensData.length === 0 ? (
+                            {myNFTData.length === 0 ? (
                                 <Text>No NFT owned yet</Text>
                             ) : (
-                                myTokensData.map((x) => (
+                                myNFTData.map((x) => (
                                     <Box key={x.dna} className="w-[20rem]">
                                         <img
-                                            src={x.image}
+                                            src={x.image.replace("ipfs://", "https://ipfs.io/ipfs/")}
                                             className="w-full object-contain"
                                             alt={x.name}
                                         />
@@ -38,9 +39,6 @@ function App() {
                                         <Text className="block">
                                             Description: {x.description}
                                         </Text>
-                                        <Button className="px-8 py-2 text-xl mt-2">
-                                            Mint
-                                        </Button>
                                     </Box>
                                 ))
                             )}
@@ -48,13 +46,13 @@ function App() {
                     }
                     AllCollections={
                         <Flex align="center" gap="8" wrap={"wrap"}>
-                            {tokensData.length === 0 ? (
+                            {NFTCollection.length === 0 ? (
                                 <Text>Loading...</Text>
                             ) : (
-                                tokensData.map((x) => (
+                                NFTCollection.map((x) => (
                                     <Box key={x.dna} className="w-[20rem]">
                                         <img
-                                            src={x.image}
+                                            src={x.image.replace("ipfs://", "https://ipfs.io/ipfs/")}
                                             className="w-full object-contain"
                                             alt={x.name}
                                         />

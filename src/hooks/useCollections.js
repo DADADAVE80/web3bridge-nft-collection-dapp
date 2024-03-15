@@ -22,7 +22,7 @@ const useCollections = () => {
                 const json = await tokensMetadataResponse[i].json();
                 tokensMetadataJson.push(json);
             }
-
+            
             setData(tokensMetadataJson);
         })();
     }, []);
